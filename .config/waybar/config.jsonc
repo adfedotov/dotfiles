@@ -1,0 +1,42 @@
+// -*- mode: jsonc -*-
+{
+    "layer": "top",
+    "position": "top",
+    "height": 28,
+    "spacing": 0,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-right": ["cpu", "memory", "network", "wireplumber", "clock"],
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "persistent-workspaces": {
+            "*": [1, 2, 3, 4, 5]
+        },
+        "on-click": "activate"
+    },
+    "cpu": {
+        "format": "cpu {usage}%",
+        "interval": 2,
+        "tooltip": false
+    },
+    "memory": {
+        "format": "mem {percentage}%",
+        "tooltip": false
+    },
+    "network": {
+        "format-wifi": "wifi {signalStrength}%",
+        "format-ethernet": "eth",
+        "format-disconnected": "offline",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+        "tooltip-format-ethernet": "{ipaddr}"
+    },
+    "wireplumber": {
+        "format": "vol {volume}%",
+        "format-muted": "muted",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "scroll-step": 5
+    },
+    "clock": {
+        "format": "{:%H:%M  %d %b}",
+        "tooltip-format": "<tt>{calendar}</tt>"
+    }
+}
