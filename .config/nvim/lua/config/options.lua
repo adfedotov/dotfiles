@@ -1,32 +1,38 @@
--- Editor options
-local opt = vim.opt
+local o = vim.opt
 
--- Indentation (defaults - will be overridden by editorconfig/prettier)
-opt.tabstop = 2 -- Number of spaces tabs count for
-opt.shiftwidth = 2 -- Size of an indent
-opt.softtabstop = 2 -- Number of spaces for <Tab> in insert mode
-opt.expandtab = true -- Use spaces instead of tabs
-opt.smartindent = true -- Insert indents automatically
+o.number = true
+o.relativenumber = true
+o.signcolumn = "yes"
+o.cursorline = true
+o.termguicolors = true
+-- o.scrolloff = 8
+o.wrap = false
+o.splitright = true
+o.splitbelow = true
 
-opt.clipboard = "unnamedplus"
+o.expandtab = true
+o.shiftwidth = 2
+o.tabstop = 2
+o.smartindent = true
 
--- Enable EditorConfig support (built into Neovim)
--- This will automatically read .editorconfig files in your projects
-vim.g.editorconfig = true
+o.ignorecase = true
+o.smartcase = true
+o.hlsearch = true
+o.incsearch = true
 
--- Line numbers
-opt.number = true
-opt.relativenumber = true
+o.undofile = true
+o.swapfile = false
+-- o.updatetime = 250
+o.timeoutlen = 400
+o.clipboard = "unnamedplus"
+-- o.mouse = "a"
+o.completeopt = { "menu", "menuone", "noselect" }
+o.confirm = true
 
--- Search
-opt.ignorecase = true -- Ignore case when searching
-opt.smartcase = true -- Override ignorecase if search has uppercase
-
--- UI
-opt.signcolumn = "yes" -- Always show sign column
-opt.cursorline = true -- Highlight current line
-opt.termguicolors = true
-
--- Files
-opt.undofile = true -- Persistent undo history
-opt.swapfile = false -- No swap files
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "python" },
+	callback = function()
+		vim.bo.shiftwidth = 4
+		vim.bo.tabstop = 4
+	end,
+})
