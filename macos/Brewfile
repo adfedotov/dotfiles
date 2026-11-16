@@ -27,6 +27,7 @@ brew "fd"
 brew "fzf"
 brew "ripgrep"
 brew "jq"
+brew "stow"
 brew "gopass"
 
 # ── Languages / package managers ──
