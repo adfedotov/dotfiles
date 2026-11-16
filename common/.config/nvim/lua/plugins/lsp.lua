@@ -46,6 +46,7 @@ return {
 			-- ── install & auto-enable servers ──
 			require("mason-lspconfig").setup({
 				ensure_installed = {
+					"ts_ls",
 					"eslint",
 					"html",
 					"cssls",
