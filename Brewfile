@@ -1,0 +1,60 @@
+# Install everything with: brew bundle --file=Brewfile
+
+tap "anomalyco/tap"
+tap "felixkratz/formulae"
+tap "nikitabobko/tap"
+
+# ── Window management / bar ──
+cask "aerospace"
+brew "felixkratz/formulae/borders"
+brew "felixkratz/formulae/sketchybar"
+
+# ── Terminal / shell ──
+cask "ghostty"
+brew "tmux"
+brew "herdr"
+brew "pure"
+brew "yazi"
+brew "htop"
+brew "neofetch"
+
+# ── Editor ──
+brew "neovim"
+brew "tree-sitter-cli"
+
+# ── CLI tools ──
+brew "fd"
+brew "fzf"
+brew "ripgrep"
+brew "jq"
+brew "gopass"
+
+# ── Languages / package managers ──
+brew "nvm"
+brew "uv"
+brew "yarn"
+
+# ── Cloud / infra / DB ──
+brew "azure-cli"
+cask "gcloud-cli"
+cask "orbstack"
+cask "dbeaver-community"
+cask "postman"
+
+# ── AI ──
+cask "claude-code"
+brew "ollama"
+
+# ── Apps ──
+cask "anomalyco/tap/hex"
+cask "finetune"
+cask "obsidian"
+cask "royal-tsx"
+cask "spotify"
+cask "tinycast"
+cask "visual-studio-code"
+cask "zen"
+
+# ── Fonts ──
+cask "font-hack-nerd-font"
+cask "font-symbols-only-nerd-font"
