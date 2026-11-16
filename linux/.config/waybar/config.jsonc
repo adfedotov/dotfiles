@@ -1,42 +1,80 @@
-// -*- mode: jsonc -*-
 {
     "layer": "top",
     "position": "top",
     "height": 28,
     "spacing": 0,
-    "modules-left": ["hyprland/workspaces"],
-    "modules-right": ["cpu", "memory", "network", "wireplumber", "clock"],
+    "margin-top": 5,
+    "margin-left": 5,
+    "margin-right": 5,
+
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "custom/nightlight", "pulseaudio", "network", "bluetooth", "cpu", "memory", "power-profiles-daemon", "battery"],
+
     "hyprland/workspaces": {
         "format": "{id}",
-        "persistent-workspaces": {
-            "*": [1, 2, 3, 4, 5]
-        },
-        "on-click": "activate"
+        "disable-scroll": true
     },
-    "cpu": {
-        "format": "cpu {usage}%",
+    "hyprland/window": {
+        "format": "{class}",
+        "max-length": 60,
+        "separate-outputs": true
+    },
+    "clock": {
+        "format": "{:%a %d %b  %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>"
+    },
+    "tray": { "spacing": 10 },
+    "pulseaudio": {
+        "format": "VOL {volume}%",
+        "format-muted": "VOL muted",
+        "format-icons": { "default": ["", "", ""] },
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "scroll-step": 5
+    },
+    "custom/nightlight": {
+        "exec": "pgrep -x hyprsunset >/dev/null && echo '' || echo ''",
         "interval": 2,
-        "tooltip": false
-    },
-    "memory": {
-        "format": "mem {percentage}%",
+        "on-click": "pgrep -x hyprsunset >/dev/null && pkill -x hyprsunset || (setsid hyprsunset >/dev/null 2>&1 &)",
         "tooltip": false
     },
     "network": {
-        "format-wifi": "wifi {signalStrength}%",
-        "format-ethernet": "eth",
-        "format-disconnected": "offline",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
-        "tooltip-format-ethernet": "{ipaddr}"
+        "format-wifi": "{icon}",
+        "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤮",
+        "tooltip-format-wifi": "{essid}  {signalStrength}%\n{ipaddr}",
+        "tooltip-format": "{ifname} {ipaddr}",
+        "on-click": "networkmanager_dmenu"
     },
-    "wireplumber": {
-        "format": "vol {volume}%",
-        "format-muted": "muted",
-        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-        "scroll-step": 5
+    "bluetooth": {
+        "format": "󰂯",
+        "format-on": "󰂯",
+        "format-off": "󰂲",
+        "format-disabled": "󰂲",
+        "format-connected": "󰂱",
+        "tooltip-format": "{controller_alias}  {status}",
+        "tooltip-format-connected": "{controller_alias}\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "bzmenu --launcher fuzzel"
     },
-    "clock": {
-        "format": "{:%H:%M  %d %b}",
-        "tooltip-format": "<tt>{calendar}</tt>"
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}",
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+    "cpu": { "format": " {usage}%", "tooltip": false },
+    "memory": { "format": "󰍛 {}%" },
+    "battery": {
+        "states": { "warning": 30, "critical": 15 },
+        "format": "BAT {capacity}%",
+        "format-charging": "BAT {capacity}% +",
+        "format-icons": ["", "", "", "", ""]
     }
 }
