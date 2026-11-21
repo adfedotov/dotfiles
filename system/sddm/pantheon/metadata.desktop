@@ -1,0 +1,10 @@
+[SddmGreeterTheme]
+Name=Pantheon
+Description=Minimal Nord-tinted login with a frosted card; wallpaper and preset set per host
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=pantheon
+Theme-API=2.0
+QtVersion=6

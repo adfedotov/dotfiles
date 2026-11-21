@@ -1,1 +1,5 @@
 .DS_Store
+
+# SDDM: per-host files written by system/sddm/install.sh
+system/sddm/pantheon/theme.conf.user
+system/sddm/pantheon/background.*
