@@ -4,9 +4,9 @@ Each top-level folder mirrors `$HOME` and is installed with [GNU Stow](https://w
 
 | Folder   | Contents                                  |
 | -------- | ----------------------------------------- |
-| `common` | Shared across OSes: nvim, tmux            |
+| `common` | Shared across OSes: nvim, tmux, kitty, starship |
 | `macos`  | aerospace, sketchybar, `Brewfile`         |
-| `linux`  | hyprland, waybar (Arch)                   |
+| `linux`  | hyprland, waybar, fuzzel, gtk, zsh (Arch) |
 
 ## Install
 
