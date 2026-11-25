@@ -37,3 +37,4 @@ window#waybar {
 #battery.warning { color: #ebcb8b; }
 #battery.critical:not(.charging) { color: #bf616a; }
 #network.disconnected, #pulseaudio.muted { color: #6c7386; }
+#custom-nightlight.on { color: #ebcb8b; }

@@ -35,8 +35,9 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal    = "kitty"
-local fileManager = "dolphin"
-local menu        = "fuzzel"
+local fileManager = "thunar"
+local guiFileManager = "thunar"
+local menu = "fuzzel"
 
 
 -------------------
@@ -56,6 +57,9 @@ local menu        = "fuzzel"
 
 hl.on("hyprland.start", function ()
   hl.exec_cmd("waybar")
+  hl.exec_cmd("mako")
+  hl.exec_cmd("udiskie --automount --notify --smart-tray")
+  hl.exec_cmd("hyprpaper")
   hl.exec_cmd("hypridle")
   hl.exec_cmd("hyprsunset")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
@@ -286,10 +290,29 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(guiFileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"))
+
+-- Screenshots (copied to clipboard unless saving)
+local shot = "~/.config/hypr/scripts/screenshot.sh "
+hl.bind("Print",                   hl.dsp.exec_cmd(shot .. "region"))   -- area -> clipboard
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd(shot .. "region"))   -- same, for keyboards without Print
+hl.bind("SHIFT + Print",           hl.dsp.exec_cmd(shot .. "screen"))   -- focused monitor -> clipboard
+hl.bind("ALT + Print",             hl.dsp.exec_cmd(shot .. "window"))   -- active window -> clipboard
+hl.bind(mainMod .. " + Print",     hl.dsp.exec_cmd(shot .. "edit"))     -- area -> annotate in satty
+hl.bind("CTRL + Print",            hl.dsp.exec_cmd(shot .. "save"))     -- area -> ~/Pictures/Screenshots
+
+-- Notifications (mako)
+hl.bind(mainMod .. " + N",         hl.dsp.exec_cmd("makoctl dismiss"))                -- dismiss newest
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("makoctl dismiss --all"))          -- dismiss all
+hl.bind(mainMod .. " + ALT + N",   hl.dsp.exec_cmd("makoctl restore"))                -- bring back last dismissed
+hl.bind(mainMod .. " + CTRL + N",  hl.dsp.exec_cmd("~/.config/mako/dnd-toggle.sh"))   -- toggle do-not-disturb
+
+-- Hex dictation (global shortcuts registered via portal; Hyprland needs explicit binds)
+hl.bind("ALT + grave",      hl.dsp.global("anomaly.hex:dictation"))   -- hold to dictate
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized" }))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"))    -- dwindle only (was SUPER+J)
@@ -315,6 +338,17 @@ hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
+
+-- Move the current workspace to the left/right monitor: mainMod + CTRL + h/l (or arrows)
+hl.bind(mainMod .. " + CTRL + H",     hl.dsp.workspace.move({ monitor = "l" }))
+hl.bind(mainMod .. " + CTRL + L",     hl.dsp.workspace.move({ monitor = "r" }))
+hl.bind(mainMod .. " + CTRL + left",  hl.dsp.workspace.move({ monitor = "l" }))
+hl.bind(mainMod .. " + CTRL + right", hl.dsp.workspace.move({ monitor = "r" }))
+
+-- Jump back and forth between the last two workspaces
+hl.bind(mainMod .. " + TAB", hl.dsp.focus({ workspace = "previous" }))
+-- Pressing the number of the workspace you're already on also jumps back
+hl.config({ binds = { workspace_back_and_forth = true } })
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]

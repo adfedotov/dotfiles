@@ -34,10 +34,11 @@
         "scroll-step": 5
     },
     "custom/nightlight": {
-        "exec": "pgrep -x hyprsunset >/dev/null && echo '' || echo ''",
-        "interval": 2,
-        "on-click": "pgrep -x hyprsunset >/dev/null && pkill -x hyprsunset || (setsid hyprsunset >/dev/null 2>&1 &)",
-        "tooltip": false
+        "exec": "~/.config/waybar/scripts/nightlight.sh status",
+        "return-type": "json",
+        "interval": 60,
+        "signal": 8,
+        "on-click": "~/.config/waybar/scripts/nightlight.sh toggle"
     },
     "network": {
         "format-wifi": "{icon}",

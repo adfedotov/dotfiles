@@ -1,0 +1,61 @@
+# mako — Nord, square, matches fuzzel + hyprland borders
+
+# ---- layout ----
+anchor=top-right
+layer=overlay
+width=380
+height=200
+margin=10
+padding=14,16
+outer-margin=5
+border-size=2
+border-radius=0
+max-visible=5
+sort=-time
+group-by=app-name,summary
+
+# ---- look ----
+font=JetBrainsMono Nerd Font 11
+background-color=#141418f2
+text-color=#d8dee9
+border-color=#88c0d0
+progress-color=over #88c0d044
+
+icons=1
+icon-location=left
+max-icon-size=48
+
+# app name (dim) / summary (bold) / body
+format=<span size="small" foreground="#6c7386">%a</span>\n<b>%s</b>\n%b
+markup=1
+
+# ---- behaviour ----
+default-timeout=5000
+ignore-timeout=0
+
+# ---- urgency ----
+[urgency=low]
+border-color=#3b4252
+text-color=#a3abb9
+default-timeout=3000
+
+[urgency=critical]
+border-color=#bf616a
+background-color=#1c1416f2
+default-timeout=0
+
+# grouped stack: show the count
+[grouped]
+format=<span size="small" foreground="#6c7386">%a  ·  %g</span>\n<b>%s</b>\n%b
+
+# ---- do not disturb (makoctl mode -t do-not-disturb) ----
+[mode=do-not-disturb]
+invisible=1
+
+# critical still gets through DND
+[mode=do-not-disturb urgency=critical]
+invisible=0
+
+# the DND toggle's own confirmation
+[mode=do-not-disturb app-name=mako-dnd]
+invisible=0

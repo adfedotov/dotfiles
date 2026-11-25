@@ -1,0 +1,17 @@
+[general]
+# close after copying/saving
+early-exit = true
+initial-tool = "arrow"
+copy-command = "wl-copy"
+# Enter = copy to clipboard (Ctrl+S still saves)
+actions-on-enter = ["save-to-clipboard"]
+save-after-copy = false
+output-filename = "~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png"
+default-hide-toolbars = false
+
+[font]
+family = "JetBrainsMono Nerd Font"
+
+# Nord palette for the colour picker
+[color-palette]
+palette = ["#bf616a", "#ebcb8b", "#a3be8c", "#88c0d0", "#b48ead", "#eceff4"]

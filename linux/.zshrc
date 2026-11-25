@@ -27,12 +27,27 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 source <(fzf --zsh)
 
-# nvm (pacman install), lazy-loaded on first use
-_load_nvm() {
-  unset -f nvm node npm npx _load_nvm 2>/dev/null
+# nvm (pacman install)
+# Put the default node on PATH eagerly (cheap glob, no nvm.sh), so node/npm/npx
+# are real binaries — works in non-interactive shells and Claude Code's shell
+# snapshots. Only `nvm` itself is lazy-loaded, via a self-contained stub
+# (no helper function: snapshots drop _-prefixed functions → infinite recursion).
+export NVM_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/nvm"
+if [[ -r $NVM_DIR/alias/default ]]; then
+  _nvm_bin=( $NVM_DIR/versions/node/v${$(<$NVM_DIR/alias/default)#v}*/bin(N/nOn[1]) )
+  (( $#_nvm_bin )) && export PATH="$_nvm_bin[1]:$PATH"
+  unset _nvm_bin
+fi
+nvm() {
+  unset -f nvm
   source /usr/share/nvm/init-nvm.sh
+  nvm "$@"
 }
-for _cmd in nvm node npm npx; do
-  eval "$_cmd() { _load_nvm; $_cmd \"\$@\"; }"
-done
-unset _cmd
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  ":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
